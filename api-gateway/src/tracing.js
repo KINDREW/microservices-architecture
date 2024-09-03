@@ -1,5 +1,6 @@
 const { NodeTracerProvider } = require('@opentelemetry/sdk-trace-node');
 const { ZipkinExporter } = require('@opentelemetry/exporter-zipkin');
+const { SimpleSpanProcessor } = require('@opentelemetry/sdk-trace-base'); // Correct import for SimpleSpanProcessor
 const { registerInstrumentations } = require('@opentelemetry/instrumentation');
 const { HttpInstrumentation } = require('@opentelemetry/instrumentation-http');
 

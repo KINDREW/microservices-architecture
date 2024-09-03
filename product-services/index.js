@@ -10,7 +10,7 @@ require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3002;
-const consul = Consul({ host: process.env.CONSUL_HOST || 'localhost', port: process.env.CONSUL_PORT || 8500 });
+const consul = new Consul({ host: process.env.CONSUL_HOST || 'localhost', port: process.env.CONSUL_PORT || 8500 });
 
 app.use(express.json());
 initTracer();

@@ -2,6 +2,7 @@ const { NodeTracerProvider } = require('@opentelemetry/sdk-trace-node');
 const { ZipkinExporter } = require('@opentelemetry/exporter-zipkin');
 const { registerInstrumentations } = require('@opentelemetry/instrumentation');
 const { HttpInstrumentation } = require('@opentelemetry/instrumentation-http');
+const { SimpleSpanProcessor } = require('@opentelemetry/sdk-trace-base'); // Add this line
 
 function initTracer() {
     const provider = new NodeTracerProvider();
