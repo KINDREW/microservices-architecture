@@ -1,6 +1,6 @@
 const express = require('express');
 const axios = require('axios');
-const { getServiceUrl } = require('./serviceDiscovery');
+const { getServiceUrl } = require('./serviceDiscovery'); // Importing getServiceUrl
 const { authenticateJWT } = require('./authMiddleware');
 const { CircuitBreaker, CircuitBreakerError } = require('opossum');
 const { initTracer } = require('./tracing');
@@ -17,6 +17,20 @@ const breakerOptions = {
     timeout: 5000, // How long to wait for a service call to respond
     errorThresholdPercentage: 50, // Error percentage to trigger open state
     resetTimeout: 30000 // Time to wait before transitioning to half-open state
+};
+
+// Create Proxy Handler with Dynamic Service Discovery
+const createProxyHandler = (serviceName) => {
+    return async (req) => {
+        const serviceUrl = await getServiceUrl(serviceName); // Use getServiceUrl here
+        const response = await axios({
+            method: req.method,
+            url: `${serviceUrl}${req.originalUrl}`, // Route request to the correct service
+            data: req.body,
+            headers: req.headers
+        });
+        return response;
+    };
 };
 
 // Create Circuit Breakers for each service
